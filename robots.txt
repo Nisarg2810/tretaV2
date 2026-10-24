@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nisarg2810.github.io/tretaV2/sitemap.xml
