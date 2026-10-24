@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Builds the TRETĀ Derma site. Edit copy here, then run: python3 build.py"""
 import json, os, html
+from urllib.parse import urlparse
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-BASE = "https://nisarg2810.github.io/tretaV2/"
+BASE = os.environ.get("BASE", "https://nisarg2810.github.io/tretaV2/")
 V = "1"  # cache buster for site.css / site.js
 PHONE, PHONE_D, WA = "+918511799700", "+91 85117 99700", "918511799700"
 IG, FB = "https://www.instagram.com/tretaderma/", "https://www.facebook.com/61562841763497"
@@ -534,9 +535,9 @@ def book_page():
     return page("book.html", "Book a Dermatologist Appointment in Maninagar, Ahmedabad | TRETĀ Derma", "Book a skin, hair or hair transplant consultation at TRETĀ Derma, Maninagar, Ahmedabad. Pick a doctor and time online, confirm on WhatsApp.", body, "", schema)
 
 def notfound():
-    body = f'<section class="phero" style="min-height:70vh"><div class="wrap"><h1 class="display">Page not<br><em>found.</em></h1><p class="lead">The page may have moved. Try the home page or book a consultation.</p><div class="hero-ctas" style="margin-top:30px"><a class="btn btn-ink" href="/treta/">Go home</a><a class="btn btn-line" href="/treta/book.html">Book a visit</a></div></div></section>'
+    body = f'<section class="phero" style="min-height:70vh"><div class="wrap"><h1 class="display">Page not<br><em>found.</em></h1><p class="lead">The page may have moved. Try the home page or book a consultation.</p><div class="hero-ctas" style="margin-top:30px"><a class="btn btn-ink" href="./">Go home</a><a class="btn btn-line" href="book.html">Book a visit</a></div></div></section>'
     s = page("404.html", "Page not found | TRETĀ Derma", "This page could not be found.", body)
-    return s.replace('<head><meta charset="utf-8">', '<head><meta charset="utf-8"><base href="/tretaV2/"><meta name="robots" content="noindex">', 1).replace('<meta name="robots" content="index,follow,max-image-preview:large">', "")
+    return s.replace('<head><meta charset="utf-8">', '<head><meta charset="utf-8"><base href="' + urlparse(BASE).path + '"><meta name="robots" content="noindex">', 1).replace('<meta name="robots" content="index,follow,max-image-preview:large">', "")
 
 # ------------------------------------------------------------------ write
 def w(name, s):
